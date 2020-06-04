@@ -1,0 +1,4 @@
+wheel
+python-dotenv
+flask
+google-cloud-storage
