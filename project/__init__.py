@@ -20,6 +20,10 @@ def create_app(config_filename=None):
     return app
 
 def initialize_extensions(app):
+    """
+       Create the storage bucket and file that we will
+       use for our testing data.
+    """
     # Get the storage bucket
     storage_client = storage.Client()
     bucket_name = app.config.get('DATA_BUCKET_NAME')
