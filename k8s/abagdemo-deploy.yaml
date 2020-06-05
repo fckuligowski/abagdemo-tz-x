@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: abagdemo 
+  namespace: abagdemo
+  labels:
+    app: abagdemo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: abagdemo 
+  template:
+    metadata:
+      labels:
+        app: abagdemo
+    spec:
+      containers:
+      - name: abagdemo
+        image: fckuligowski/abagdemo:v1.0
+        ports:
+        - containerPort: 5000
+        env:
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+            value: "/home/abagdemo/instance/creds/justademo-acoustic-apex.json"
+        volumeMounts:
+        - name: gcp-creds
+          mountPath: "/home/abagdemo/instance/creds"
+      volumes:
+        - name: gcp-creds
+          secret:
+            secretName: abagdemo-gcp-creds
