@@ -15,10 +15,15 @@ docker build -t fckuligowski/abagdemo:v1.0 -f Dockerfile.prod .
 If you want to run it from Docker
 
 ```
-docker run --name abagdemo -d -p 30080:5000 --rm fckuligowski/abagdemo:v1.0
+docker run --name abagdemo -d -p 30080:5000 --rm -v instance/creds/justademo-acoustic-apex.json=/abagdemo/justademo-acoustic-apex.json -e GOOGLE_APPLICATION_CREDENTIALS=/abagdemo/instance/creds/justademo-acoustic-apex.json fckuligowski/abagdemo:v1.1
 or
-docker run --name abagdemo -p 30080:5000 --rm fckuligowski/abagdemo:v1.0
+docker run --name abagdemo -p 30080:5000 --rm -v instance/creds/justademo-acoustic-apex.json=/abagdemo/justademo-acoustic-apex.json -e GOOGLE_APPLICATION_CREDENTIALS=/abagdemo/instance/creds/justademo-acoustic-apex.json fckuligowski/abagdemo:v1.1
 ```
+If you want to run pytest to test it from Docker
+```
+docker run --name abagdemo -p 30080:5000 --rm -e MODE='TESTING' -v instance/creds/justademo-acoustic-apex.json=/abagdemo/justademo-acoustic-apex.json -e GOOGLE_APPLICATION_CREDENTIALS=/abagdemo/instance/creds/justademo-acoustic-apex.json -v ~/py/abagdemo/tests/:/abagdemo/tests fckuligowski/abagdemo:v1.1
+```
+Note that the image name needs to be at the end of the command, after the "-e" env var parms (else Docker will pass them to the shell script as arguments, not env vars).
 
 Docker push to repo
 
