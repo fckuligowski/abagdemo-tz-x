@@ -15,9 +15,9 @@ docker build -t fckuligowski/abagdemo:v1.0 -f Dockerfile.prod .
 If you want to run it from Docker
 
 ```
-docker run --name abagdemo -d -p 30080:5000 --rm abagdemo:v1.0
+docker run --name abagdemo -d -p 30080:5000 --rm fckuligowski/abagdemo:v1.0
 or
-docker run --name abagdemo -p 30080:5000 --rm abagdemo:v1.0
+docker run --name abagdemo -p 30080:5000 --rm fckuligowski/abagdemo:v1.0
 ```
 
 Docker push to repo
