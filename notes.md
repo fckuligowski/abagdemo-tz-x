@@ -31,5 +31,12 @@ Docker push to repo
 docker push fckuligowski/abagdemo:v1.0
 ```
 
+**Jenkins**
+Had to go to this url from my Chrome browser session, the one logged into the GCP account I'm using, to get the Jenkins pipeline to trigger after a commit.
+```
+https://8080-dot-12675158-dot-devshell.appspot.com/git/notifyCommit?url=https://github.com/fckuligowski/abagdemo.git
+```
+Gonna need a Jenkins server that's publicly available, so the Git Webhooks can work.
+
 
 

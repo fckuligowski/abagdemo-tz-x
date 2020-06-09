@@ -9,7 +9,7 @@ pipeline {
                 echo 'Hello world!' 
                 sh("echo ${GOOGLE_APPLICATION_CREDENTIALS}")
                 sh("head -4 ${GOOGLE_APPLICATION_CREDENTIALS}")
-                echo "Make me feel line a millionaire." 
+                echo "oh yeah." 
             }
         }
     }
