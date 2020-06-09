@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                sh 'echo again fn hard'
+                sh 'echo when will they just tell you how to set this fn shit up'
                 sh 'ls -al'
             }
         }
