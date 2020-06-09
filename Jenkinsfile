@@ -9,7 +9,7 @@ pipeline {
                 echo 'Hello world!' 
                 sh("echo ${GOOGLE_APPLICATION_CREDENTIALS}")
                 sh("cat ${GOOGLE_APPLICATION_CREDENTIALS}")
-                echo 'Every boy. Every girl.' 
+                echo 'Every boy. Every gal' 
             }
         }
     }
