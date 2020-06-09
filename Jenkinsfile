@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                sh 'echo qwerty'
+                sh 'echo try it again'
                 sh 'ls -al'
             }
         }
