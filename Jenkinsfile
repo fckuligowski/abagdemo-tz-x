@@ -11,6 +11,7 @@ pipeline {
             steps {
                 echo 'Hello world!' 
                 sh("head -4 ${GOOGLE_APPLICATION_CREDENTIALS}")
+                sh("pwd")
                 sh("ls -al")
             }
         }
