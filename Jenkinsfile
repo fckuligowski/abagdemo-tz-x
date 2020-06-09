@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                sh 'echo Let me entertain you'
+                sh 'echo again fn hard'
                 sh 'ls -al'
             }
         }
