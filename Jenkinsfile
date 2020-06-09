@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                sh 'echo safdsad'
+                sh 'echo qwerty'
                 sh 'ls -al'
             }
         }
