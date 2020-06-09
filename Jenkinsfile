@@ -8,8 +8,8 @@ pipeline {
             steps {
                 echo 'Hello world!' 
                 sh("echo ${GOOGLE_APPLICATION_CREDENTIALS}")
-                sh("cat ${GOOGLE_APPLICATION_CREDENTIALS}")
-                echo 'here we go again' 
+                sh("head -4 ${GOOGLE_APPLICATION_CREDENTIALS}")
+                echo "And we are at the end" 
             }
         }
     }
