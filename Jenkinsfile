@@ -1,10 +1,12 @@
-  
 pipeline {
-    agent any 
+    agent { 
+        dockerfile true 
+    }
     stages {
-        stage('Stage 1') {
+        stage('Test') {
             steps {
-                echo 'why does everything have to be so hard' 
+                sh 'echo Let me entertain you'
+                sh 'ls -al'
             }
         }
     }
