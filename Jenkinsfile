@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Stage 1') {
             steps {
-                echo 'Hello world' 
+                echo 'why does everything have to be so hard' 
             }
         }
     }
