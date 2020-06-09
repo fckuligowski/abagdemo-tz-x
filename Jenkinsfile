@@ -1,25 +1,9 @@
-pipeline {
-    environment {
-        GOOGLE_APPLICATION_CREDENTIALS = credentials('hazel-math-cred-file')
-    }
-    agent {
-        checkout scm
-        def dockerImage = docker.build("abagdemo:${env.BUILD_ID}")
-        dockerImage.inside {
-            echo 'Inside the new container' 
-            sh("head -4 ${GOOGLE_APPLICATION_CREDENTIALS}")
-            sh("pwd")
-            sh("ls -al")
-        }
-    }
-    stages {
-        stage('Stage 1') {
-            steps {
-                echo 'Hello World!' 
-                sh("head -4 ${GOOGLE_APPLICATION_CREDENTIALS}")
-                sh("pwd")
-                sh("ls -al")
-            }
+node {
+    stage('Example') {
+        if (env.BRANCH_NAME == 'master') {
+            echo 'I only execute on the master branch'
+        } else {
+            echo 'I execute elsewhere'
         }
     }
 }
