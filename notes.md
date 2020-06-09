@@ -36,7 +36,7 @@ Had to go to this url from my Chrome browser session, the one logged into the GC
 ```
 https://8080-dot-12675158-dot-devshell.appspot.com/git/notifyCommit?url=https://github.com/fckuligowski/abagdemo.git
 ```
-Gonna need a Jenkins server that's publicly available, so the Git Webhooks can work.
+Gonna need a Jenkins server that's publicly available, so the Git Webhooks can work. For now, I'll use polling.
 
 
 

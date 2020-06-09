@@ -6,4 +6,4 @@ WORKDIR /abagdemo
 RUN pip3 install -r requirements.txt
 
 COPY . /abagdemo
-ENTRYPOINT ["./boot.sh"]
+# ENTRYPOINT ["./boot.sh"]
