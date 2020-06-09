@@ -2,7 +2,7 @@ pipeline {
     environment {
         GOOGLE_APPLICATION_CREDENTIALS = credentials('hazel-math-cred-file')
     }
-    node {
+    agent {
         checkout scm
         def dockerImage = docker.build("abagdemo:${env.BUILD_ID}")
         dockerImage.inside {
