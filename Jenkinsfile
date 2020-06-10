@@ -1,7 +1,7 @@
 node {  
     checkout scm
 
-    def customImage = docker.build("fckuligowski/abagdemo:${env.BUILD_ID}")
+    def customImage = docker.build("fckuligowski/abagdemo:v1.1.${env.BUILD_ID}")
 
     customImage.inside {
         withCredentials([file(credentialsId: 'hazel-math', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
@@ -21,5 +21,7 @@ node {
             }
         }
     }
+
+    customImage.push('latest')
     echo 'AT THE END'
 }
