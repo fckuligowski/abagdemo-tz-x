@@ -2,11 +2,15 @@ node {
     checkout scm
     
     def imageTag = "fckuligowski/abagdemo:v1.1.${env.BUILD_ID}"
-    sh "echo ${imageTag} >> version.txt"
-    sh "git add ."
-    sh "git status"
-    sh "git commit -m 'update version ${env.BUILD_ID}'"
-    sh "git push origin master"
+
+    writeFile file: 'version.txt', text: imageTag
+
+    withCredentials([usernamePassword(credentialsId: 'jenkins_admin', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+        sh "git add ."
+        sh "git status"
+        sh "git commit -m 'update version ${env.BUILD_ID}'"
+        sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@${GIT_URL} --all')
+    }
 
     def customImage = docker.build(imageTag)
 
