@@ -4,11 +4,14 @@ pipeline {
         GOOGLE_APPLICATION_CREDENTIALS = credentials('hazel-math')
     }
     stages {
-        stage('Test') {
+        stage('Unit Tests') {
             steps {
-                sh 'ls -al'
-                sh 'tests/testit.sh'
-                echo 'after'
+                sh 'tests/testit.sh unit'
+            }
+        }
+        stage('Functional Tests') {
+            steps {
+                sh 'tests/testit.sh functional'
             }
         }
     }

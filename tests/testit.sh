@@ -1,6 +1,5 @@
 # Run the tests using pytest
 export PYTHONPATH=`pwd`
-# source venv/bin/activate
-pytest --setup-show 
+pytest tests/$1 --setup-show 
 # OR for less verbose output
 # pytest -v
