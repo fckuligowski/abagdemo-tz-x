@@ -21,4 +21,5 @@ node {
             }
         }
     }
+    echo 'AT THE END'
 }
