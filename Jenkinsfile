@@ -22,7 +22,7 @@ node {
         }
     }
 
-    docker.withRegistry('https://hub.docker.com', 'docker-fckuligowski') {
+    docker.withRegistry('', 'docker-fckuligowski') {
         customImage.push('latest')
     }
     
