@@ -17,12 +17,13 @@ spec:
     spec:
       containers:
       - name: abagdemo
-        image: fckuligowski/abagdemo:v1.0
+        image: fckuligowski/abagdemo:v1.1.27
         ports:
         - containerPort: 5000
         env:
           - name: GOOGLE_APPLICATION_CREDENTIALS
-            value: "/home/abagdemo/instance/creds/justademo-acoustic-apex.json"
+            value: "/home/abagdemo/instance/creds/hazel-math-279814-ab43b8692187.json"
+        command: ["/bin/sh", "/abagdemo/runit.sh"]
         volumeMounts:
         - name: gcp-creds
           mountPath: "/home/abagdemo/instance/creds"
