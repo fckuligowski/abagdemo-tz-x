@@ -9,7 +9,7 @@ node {
         sh "git add ."
         sh "git status"
         sh "git commit -m 'update version ${env.BUILD_ID}'"
-        sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@${GIT_URL} --all')
+        sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@${env.GIT_URL} --all')
     }
 
     def customImage = docker.build(imageTag)
