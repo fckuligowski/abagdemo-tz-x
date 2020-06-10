@@ -4,10 +4,8 @@ node {
     def customImage = docker.build("fckuligowski/abagdemo:${env.BUILD_ID}")
 
     customImage.inside {
-        environment {
-            GOOGLE_APPLICATION_CREDENTIALS = credentials('hazel-math')
+        withCredentials([file(credentialsId: 'hazel-math', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+            sh 'printenv'
         }
-
-        sh 'printenv'
     }
 }
