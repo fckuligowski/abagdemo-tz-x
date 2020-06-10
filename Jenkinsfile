@@ -3,8 +3,9 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                sh 'echo i hate jenkins'
-                sh 'ls -al'
+                echo 'before'
+                sh 'tests/testit.sh'
+                echo 'after'
             }
         }
     }
