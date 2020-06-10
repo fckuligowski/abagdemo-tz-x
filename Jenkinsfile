@@ -22,6 +22,9 @@ node {
         }
     }
 
-    customImage.push('latest')
+    docker.withRegistry('https://hub.docker.com', 'docker-fckuligowski') {
+        customImage.push('latest')
+    }
+    
     echo 'AT THE END'
 }
