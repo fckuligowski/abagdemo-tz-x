@@ -10,7 +10,7 @@ pipeline {
             }
             post {
                 always {
-                    junit allowEmptyResults: true, testResults: 'test-reports/results.xml', fingerprint: true
+                    junit allowEmptyResults: true, testResults: 'test-reports/results.xml'
                 }
             }
         }
@@ -20,7 +20,7 @@ pipeline {
             }
             post {
                 always {
-                    junit allowEmptyResults: true, testResults: 'test-reports/results.xml', fingerprint: true
+                    junit allowEmptyResults: true, testResults: 'test-reports/results.xml'
                 }
             }
         }
