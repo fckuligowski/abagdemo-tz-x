@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                sh 'echo try it again and again and again'
+                sh 'echo back for more'
                 sh 'ls -al'
             }
         }
