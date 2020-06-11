@@ -20,7 +20,9 @@ node {
 }
 
 def getBranchName() {
-    branch = scm.branches[0].name
+    fullbr = "${sh(script:'git name-rev --name-only HEAD', returnStdout: true)}"
+    echo "branch: ${fullbr}"
+    branch = fullbr.substring(fullbr.lastIndexOf('/') + 1, fullbr.length())
     echo "branch: ${branch}"
     return branch
 }
