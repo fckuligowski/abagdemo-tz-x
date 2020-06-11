@@ -1,3 +1,4 @@
+import groovy.json.JsonSlurper
 node {  
     checkout scm
     echo 'before'
@@ -9,7 +10,7 @@ node {
         returnStdout: true
     )
     // echo "allbr: ${allbr}"
-    import groovy.json.JsonSlurper
+
     def jsonSlurper = new JsonSlurper()
     pulls = jsonSlurper.parseText(allbr)
     echo 'pulls: ${pulls}'
