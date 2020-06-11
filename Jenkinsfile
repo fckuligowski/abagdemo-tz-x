@@ -5,7 +5,7 @@ node {
 
     writeFile file: 'version.txt', text: imageTag
 
-    withCredentials([usernamePassword(credentialsId: 'fckuligowsk-git', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+    withCredentials([usernamePassword(credentialsId: 'fckuligowski-git', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
         sh "printenv"
         sh "git add ."
         sh "git status"
