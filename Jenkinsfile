@@ -1,6 +1,8 @@
 node {  
     // checkout scm
+    echo 'before'
     git status
+    echo 'aftr'
     
     def imageName = getImageName()
 
