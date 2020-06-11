@@ -2,7 +2,7 @@ node {
     checkout scm
     echo 'before'
     def branch = getBranchName()
-    echo 'aftr'
+    echo 'after'
     
     allbr = sh(
         script: "curl 'https://api.github.com/repos/fckuligowski/abagdemo/pulls?state=open' -o pulls.json",
