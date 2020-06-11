@@ -6,9 +6,9 @@ node {
     
     def scrpt = ""
     allbr = sh(
-        script: "git ls-remote origin 'pull/*/head'",
+        script: "curl https://api.github.com/repos/fckuligowski/abagdemo/pulls?state=open",
         returnStdout: true
-    ).split('\n')
+    )
     echo "allbr: ${allbr}"
 
     def imageName = getImageName()
