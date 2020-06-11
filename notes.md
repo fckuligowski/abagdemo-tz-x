@@ -9,10 +9,18 @@ I had trouble with "pip3 install -r requirements.txt" with the google-cloud-stor
 Create the image for abagdemo
 
 ```
-docker build -t fckuligowski/abagdemo:v1.0 -f Dockerfile.prod .
+docker build -t fckuligowski/abagdemo:v1.x
 ```
 
-If you want to run it from Docker
+If you want to run the container from Docker, and shell into it.
+```
+docker run -td fckuligowski/abagdemo:v1.1.26 
+docker ps
+docker exec -it f1048684b081 /bin/sh
+docker stop f1048684b081
+```
+
+This was the old way I was running it.
 
 ```
 docker run --name abagdemo -d -p 30080:5000 --rm -v instance/creds/justademo-acoustic-apex.json=/abagdemo/justademo-acoustic-apex.json -e GOOGLE_APPLICATION_CREDENTIALS=/abagdemo/instance/creds/justademo-acoustic-apex.json fckuligowski/abagdemo:v1.1

@@ -1,17 +1,9 @@
 node {  
     checkout scm
     
-    def imageTag = "fckuligowski/abagdemo:v1.1.${env.BUILD_ID}"
+    def imageTag = "fckuligowski/abagdemo:${env.BUILD_ID}"
 
-    writeFile file: 'version.txt', text: imageTag
-
-    withCredentials([usernamePassword(credentialsId: 'fckuligowski-git', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-        sh "git checkout master"
-        sh "git add ."
-        sh "git status"
-        sh "git commit -m 'update version ${env.BUILD_ID}'"
-        sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/fckuligowski/abagdemo.git --all')
-    }
+    def imageName = getImageName()
 
     def customImage = docker.build(imageTag)
 
@@ -34,9 +26,17 @@ node {
         }
     }
 
-    docker.withRegistry('', 'docker-fckuligowski') {
-        customImage.push()
-    }
+    // docker.withRegistry('', 'docker-fckuligowski') {
+    //    customImage.push()
+    // }
     
     echo 'AT THE END'
+}
+
+def getImageName() {
+    images = sh(
+        script: "git diff origin/master -- k8s/abagdemo-deploy.yaml",
+        returnStdout: true
+    ).split('\n')
+    echo "images: " images
 }
