@@ -4,7 +4,11 @@ node {
     def branch = getBranchName()
     echo 'aftr'
     
-    allbr = "${sh(script:'git ls-remote origin 'pull/*/head'', returnStdout: true)}"
+    def scrpt = ""
+    allbr = sh(
+        script: "git ls-remote origin 'pull/*/head'",
+        returnStdout: true
+    ).split('\n')
     echo "allbr: ${allbr}"
 
     def imageName = getImageName()
