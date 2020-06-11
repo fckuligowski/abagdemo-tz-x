@@ -1,5 +1,5 @@
 node {  
-    // checkout scm
+    checkout scm
     echo 'before'
     def branch = getBranchName()
     echo 'aftr'
