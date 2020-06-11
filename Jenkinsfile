@@ -22,5 +22,5 @@ def getImageName() {
         script: "git diff origin/master -- k8s/abagdemo-deploy.yaml",
         returnStdout: true
     ).split('\n')
-    echo "images: " images
+    echo "images: ${images}"
 }
