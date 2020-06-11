@@ -1,7 +1,7 @@
 node {  
     // checkout scm
     echo 'before'
-    git status
+    def branch = getBranchName()
     echo 'aftr'
     
     def imageName = getImageName()
@@ -17,6 +17,25 @@ node {
 
     
     echo 'AT THE END'
+}
+
+def getBranchName() {
+    properties([
+        parameters([
+            gitParameter(branch: '',
+                branchFilter: 'origin/(.*)',
+                defaultValue: 'master',
+                description: '',
+                name: 'BRANCH',
+                quickFilterEnabled: false,
+                selectedValue: 'NONE',
+                sortMode: 'NONE',
+                tagFilter: '*',
+                type: 'PT_BRANCH')
+        ])
+    ])
+    branch = "${params.BRANCH}"
+    return branch
 }
 
 def getImageName() {
