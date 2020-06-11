@@ -5,7 +5,7 @@ node {
     echo 'aftr'
     
     allbr = sh(
-        script: "curl 'https://api.github.com/repos/fckuligowski/abagdemo/pulls?state=open -o pulls.json",
+        script: "curl 'https://api.github.com/repos/fckuligowski/abagdemo/pulls?state=open' -o pulls.json",
         returnStdout: true
     )
     // echo "allbr: ${allbr}"
