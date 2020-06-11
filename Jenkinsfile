@@ -18,6 +18,9 @@ node {
     echo 'AT THE END'
 }
 
+// Get the current Git branch name by running the Git
+// command to tell us what our current branch is.
+// Returns the name of the branch.
 def getBranchName() {
     fullbr = "${sh(script:'git name-rev --name-only HEAD', returnStdout: true)}"
     echo "branch: ${fullbr}"
