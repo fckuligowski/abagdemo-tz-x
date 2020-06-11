@@ -34,6 +34,8 @@ def getBranchName() {
                 type: 'PT_BRANCH')
         ])
     ])
+    echo "br1: ${params.BRANCH}"
+    echo "br2: ${parameters.BRANCH}"
     branch = "${params.BRANCH}"
     return branch
 }
