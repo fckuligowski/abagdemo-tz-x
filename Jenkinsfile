@@ -13,7 +13,7 @@ node {
         script: "jq . pulls.json",
         returnStdout: true
     )
-    echo 'pulls: ${pulls}'
+    echo "pulls: ${pulls}"
 
 
     def imageName = getImageName()
