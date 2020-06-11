@@ -20,7 +20,7 @@ node {
 }
 
 def getBranchName() {
-    properties([
+    /* properties([
         parameters([
             gitParameter(branch: '',
                 branchFilter: 'origin/(.*)',
@@ -36,7 +36,9 @@ def getBranchName() {
     ])
     echo "br1: ${params.BRANCH}"
     echo "br2: ${parameters.BRANCH}"
-    branch = "${params.BRANCH}"
+    branch = "${params.BRANCH}" */
+    branch = scm.branches[0].name
+    echo "branch: ${branch}"
     return branch
 }
 
