@@ -7,7 +7,6 @@ node {
     def imageName = getImageName()
 
     stage('Check Version') {
-        echo "change_id: ${env.CHANGE_ID}"
         echo "branch: ${branch}"
         echo "env: ${env}"
         if (branch == 'master') {
@@ -15,6 +14,7 @@ node {
         } else {
             echo 'This is a Pull Request'
         }
+        echo sh(returnStdout: true, script: 'env')
     }
 
     
