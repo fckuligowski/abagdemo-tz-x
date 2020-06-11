@@ -4,6 +4,9 @@ node {
     def branch = getBranchName()
     echo 'aftr'
     
+    allbr = "${sh(script:'git branch -r -l', returnStdout: true)}"
+    echo "allbr: ${allbr}"
+
     def imageName = getImageName()
 
     stage('Check Version') {
