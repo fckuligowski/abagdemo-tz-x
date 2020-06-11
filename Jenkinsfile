@@ -4,13 +4,12 @@ node {
     def imageName = getImageName()
 
     stage('Check Version') {
+        echo "branch: ${env.BRANCH_NAME}"
         if (env.'CHANGE_ID' == '') {
             echo 'This is a Pull Request'
         } else {
             echo 'This is a Merge'
         }
-        sh 'printenv'
-        echo "change_id: ${CHANGE_ID}"
     }
 
     
