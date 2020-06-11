@@ -1,1 +1,1 @@
-fckuligowski/abagdemo:v1.1.101
+fckuligowski/abagdemo:v1.1.102
