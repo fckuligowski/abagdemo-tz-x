@@ -1,4 +1,3 @@
-import groovy.json.JsonSlurper
 node {  
     checkout scm
     echo 'before'
@@ -6,13 +5,14 @@ node {
     echo 'aftr'
     
     allbr = sh(
-        script: "curl https://api.github.com/repos/fckuligowski/abagdemo/pulls?state=open",
+        script: "curl https://api.github.com/repos/fckuligowski/abagdemo/pulls?state=open -o pulls.json",
         returnStdout: true
     )
     // echo "allbr: ${allbr}"
-
-    def jsonSlurper = new JsonSlurper()
-    pulls = jsonSlurper.parseText(allbr)
+    pulls = sh(
+        script: "jq . pulls.json",
+        returnStdout: true
+    )
     echo 'pulls: ${pulls}'
 
 
