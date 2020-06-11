@@ -7,7 +7,7 @@ node {
     def imageName = getImageName()
 
     stage('Check Version') {
-        echo "branch: ${branch}"
+        echo "branch: XX${branch}XX"
         if (branch == 'master') {
             echo 'This is a Merge'
         } else {
