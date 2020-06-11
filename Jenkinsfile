@@ -2,16 +2,13 @@ node {
     checkout scm
     echo 'before'
     def branch = getBranchName()
-    environment {
-        GIT_BRANCH = getBranchName()
-    }
     echo 'aftr'
     
     def imageName = getImageName()
 
     stage('Check Version') {
-        echo "branch: ${env.GIT_BRANCH}"
-        if (env.GIT_BRANCH == 'master') {
+        echo "branch: ${branch}"
+        if (branch == 'master') {
             echo 'This is a Merge'
         } else {
             echo 'This is a Pull Request'
