@@ -22,7 +22,7 @@ node {
 def getBranchName() {
     fullbr = "${sh(script:'git name-rev --name-only HEAD', returnStdout: true)}"
     echo "branch: ${fullbr}"
-    branch = fullbr.substring(fullbr.lastIndexOf('/') + 1, fullbr.length())
+    branch = fullbr.substring(fullbr.lastIndexOf('/') + 1, fullbr.length()).trim()
     echo "branch: ${branch}"
     return branch
 }
