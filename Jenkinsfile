@@ -10,6 +10,7 @@ node {
             echo 'This is a Merge'
         }
         sh 'printenv'
+        echo "change_id: ${CHANGE_ID}"
     }
 
     
