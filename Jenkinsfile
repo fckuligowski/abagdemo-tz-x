@@ -6,7 +6,7 @@ node {
     writeFile file: 'version.txt', text: imageTag
 
     withCredentials([usernamePassword(credentialsId: 'fckuligowski-git', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-        sh "printenv"
+        sh "git checkout master"
         sh "git add ."
         sh "git status"
         sh "git commit -m 'update version ${env.BUILD_ID}'"
