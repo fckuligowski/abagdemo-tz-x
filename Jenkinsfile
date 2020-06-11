@@ -6,18 +6,6 @@ node {
     
     stage('Check Version') {
         echo "branch: ${branch}"
-        // echo "env: ${env}"
-        if (branch == 'master') {
-            echo 'This is a Merge'
-        } else {
-            if (pulls.indexOf(branch) >= 0) {
-                echo 'This is a Pull Request'
-            } else {
-                echo 'This is just a commit'
-            }    
-        }
-        echo "Environment Vars:"
-        echo sh(returnStdout: true, script: 'env')
     }
 
     if (isaPullRequest(branch) || isaMerge(branch)) {
