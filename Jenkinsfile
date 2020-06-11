@@ -14,7 +14,7 @@ node {
         } else {
             echo 'This is a Pull Request'
         }
-        echo "Env Vars:"
+        echo "Environment Vars:"
         echo sh(returnStdout: true, script: 'env')
     }
 
