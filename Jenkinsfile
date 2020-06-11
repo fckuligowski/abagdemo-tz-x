@@ -24,7 +24,7 @@ def getBranchName() {
         parameters([
             gitParameter(branch: '',
                 branchFilter: 'origin/(.*)',
-                defaultValue: 'master',
+                defaultValue: 'masterXXXX',
                 description: '',
                 name: 'BRANCH',
                 quickFilterEnabled: false,
