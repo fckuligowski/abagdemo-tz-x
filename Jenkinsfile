@@ -4,12 +4,16 @@ node {
     def branch = getBranchName()
     echo 'aftr'
     
-    def scrpt = ""
     allbr = sh(
         script: "curl https://api.github.com/repos/fckuligowski/abagdemo/pulls?state=open",
         returnStdout: true
     )
-    echo "allbr: ${allbr}"
+    // echo "allbr: ${allbr}"
+    import groovy.json.JsonSlurper
+    def jsonSlurper = new JsonSlurper()
+    pulls = jsonSlurper.parseText(allbr)
+    echo 'pulls: ${pulls}'
+
 
     def imageName = getImageName()
 
