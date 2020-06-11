@@ -58,10 +58,14 @@ def isaPullRequest(branch) {
     )
     echo "branchPulls: ${branchPulls}"
     rtn = false
-    if (pulls.indexOf(branch) >= 0) {
+    if (branchPulls.indexOf(branch) >= 0) {
         echo 'This is a Pull Request'
         rtn = true
     }  
+    cleanup = sh(
+        script: "rm pulls.json",
+        returnStdout: true
+    )
     return rtn
 }
 
