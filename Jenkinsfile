@@ -9,6 +9,7 @@ node {
     stage('Check Version') {
         echo "change_id: ${env.CHANGE_ID}"
         echo "branch: ${branch}"
+        echo "env: ${env}"
         if (branch == 'master') {
             echo 'This is a Merge'
         } else {
