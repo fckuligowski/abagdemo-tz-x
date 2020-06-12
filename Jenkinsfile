@@ -112,8 +112,8 @@ def imageExists(imageName) {
         // Parse Token from result
         echo "response: ${response.getContent()}"
         responseBody = response.getContent()
-        responseJson = jsonParse(responseBody)
-        token = responseJson.token
+        responseMap = jsonParse(responseBody)
+        token = responseMap.token
         echo "token: ${token}"
         // Call API to get list of Images
         response = httpRequest customHeaders: [[name:'Authorization', value:"JWT ${token}"]],
@@ -122,7 +122,10 @@ def imageExists(imageName) {
         echo "response: ${response.getContent()}"
         responseBody = response.getContent()
         echo "responseBody: ${responseBody}" 
-        responseJson = jsonParse(responseBody)   
+        responseMap = jsonParse(responseBody)   
+        for (int j = 0; j < responseMap.results.size(); j++) {
+            echo responseMap.results[j].name
+        }
     }
     return false
 }
