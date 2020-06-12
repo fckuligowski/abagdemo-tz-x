@@ -101,7 +101,7 @@ def imageExists(imageName) {
             {"username": "$UNAME",
              "password": "$UPASS"}
         """
-        response = httpRequest httpMode: 'POST', requestBody: httpCreds, url: "https://hub.docker.com/v2/users/login"
+        response = httpRequest httpMode: 'POST', requestBody: httpCreds, url: "https://hub.docker.com/v2/users/login", acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON'
         echo "response: ${response}"
     }
 }
