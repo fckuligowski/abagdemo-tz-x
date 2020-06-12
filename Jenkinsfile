@@ -133,14 +133,14 @@ def getImageFullName() {
 }
 
 def getImageRepo(imageFullName) {
-    iparts = imageName.split(':')
+    iparts = imageFullName.split(':')
     repo = iparts[0]
     tag = iparts[1]
     return repo
 }
 
 def getImageTag(imageFullName) {
-    iparts = imageName.split(':')
+    iparts = imageFullName.split(':')
     tag = iparts[1]
     return tag
 }
