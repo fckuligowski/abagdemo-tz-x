@@ -105,7 +105,8 @@ def imageExists(imageName) {
         response = httpRequest httpMode: 'POST', requestBody: httpCreds, url: "https://hub.docker.com/v2/users/login", acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON'
         echo "response: ${response.getContent()}"
         responseBody = response.getContent()
-        token = responseBody[token]
-        echo "token: ${token}"
+        //token = responseBody[token]
+        def json = new groovy.json.JsonSlurper().parseText(responseBody)
+        echo "token: ${json.token}"
     }
 }
