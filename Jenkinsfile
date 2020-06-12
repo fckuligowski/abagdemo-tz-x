@@ -15,23 +15,36 @@ node {
     // Determine the current GitHub branch that we are on
     def branch = getBranchName()
     
-    stage('Check Version') {
-        echo "branch: ${branch}"
-    }
-
+    // Build the Docker Image so we can test with it
+    def customImage = docker.build(imageTag)
+    
+    // Determine if we are doing a PR and/or Merge
     def doingPR = isaPullRequest(branch)
     def doingMerge = isaMerge(branch)
+
     // Unit Tests
     stage('Unit Tests') {
         if (doingPR || doingMerge) {
-            echo "Run the Unit Tests here"
+            echo "Running the Unit Tests"
+            try {
+                sh 'tests/testit.sh unit --junit-xml test-reports/results.xml'
+            } finally {
+                junit allowEmptyResults: true, testResults: 'test-reports/results.xml'
+            }
+            echo "Ran the Unit Tests"
         }
     }
 
     // Functional Tests
     stage('Functional Tests') {
         if (doingPR || doingMerge) {
-            echo "Run the Functional Tests here"
+            echo "Running the Functional Tests"
+            try {
+                sh 'tests/testit.sh functional --junit-xml test-reports/results.xml'
+            } finally {
+                junit allowEmptyResults: true, testResults: 'test-reports/results.xml'
+            }
+            echo "Ran the Functional Tests"
         }
     }
 
@@ -41,7 +54,12 @@ node {
         if (doingMerge) {
             def imageName = getImageName()
             if (!imageExists(imageName)) {
-                echo "Do the Docker Push here"
+                echo "Push Container to Docker Repo"
+                docker.withRegistry('', 'docker-fckuligowski') {
+                    customImage.push()
+                }
+            } else {
+                echo "Image ${imageName} already exists in repo"
             }
         }
     }
