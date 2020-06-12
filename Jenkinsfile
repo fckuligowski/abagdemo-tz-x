@@ -121,12 +121,12 @@ def imageExists(imageName) {
             acceptType: 'APPLICATION_JSON'
         responseBody = response.getContent()
         responseMap = jsonParse(responseBody)  
-        imageFind = responseMap.results.find { it.value.name == tag }
-        echo "imageFind: ${imageFind}"
-        if (imageFind) {
-            rtn = true
-            echo "Image was Found"
+        for (img in responseMap.results) {
+            if (img.name == tag) {
+                rtn = true
+            }
         }
     }
+    echo "imageExists - repo: ${repo}, tag: ${tag}, return: ${rtn}"
     return rtn
 }
