@@ -1,15 +1,15 @@
-//import groovy.json.JsonSlurperClassic 
+import groovy.json.JsonSlurperClassic 
 
-//@NonCPS
-//def jsonParse(def json) {
-//    new groovy.json.JsonSlurperClassic().parseText(json)
-//}
-
-//@NonCPS
-def jsonParse(String jsonText) {
-  final slurper = new groovy.json.JsonSlurper()
-  return new HashMap<>(slurper.parseText(jsonText))
+@NonCPS
+def jsonParse(def json) {
+    new groovy.json.JsonSlurperClassic().parseText(json)
 }
+
+//@NonCPS
+//def jsonParse(String jsonText) {
+//  final slurper = new groovy.json.JsonSlurper()
+//  return new HashMap<>(slurper.parseText(jsonText))
+//}
 
 node {  
     checkout scm
