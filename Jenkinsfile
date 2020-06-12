@@ -104,7 +104,7 @@ def imageExists(imageName) {
         //    url: "https://hub.docker.com/v2/repositories/${repo}/tags/?page_size=10000", 
         //    acceptType: 'APPLICATION_JSON'
         echo "response: ${response.getContent()}"
-        responseBody = response.getContent()
+        //responseBody = response.getContent()
         //responseJson = new groovy.json.JsonSlurper().parseText(responseBody)
 
     }
