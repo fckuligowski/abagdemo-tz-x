@@ -106,6 +106,6 @@ def imageExists(imageName) {
         // echo "response: ${response.getContent()}"
         //responseBody = response.getContent()
         //responseJson = new groovy.json.JsonSlurper().parseText(responseBody)
-
     }
+    return false
 }
