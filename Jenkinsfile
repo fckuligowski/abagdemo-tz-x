@@ -112,8 +112,8 @@ def imageExists(imageName) {
         responseBody = response.getContent()
         responseJson = jsonParse(responseBody)
         //responseJson = new groovy.json.JsonSlurper().parseText(responseBody)
-        //token = responseJson.token
-        //echo "token: ${token}"
+        token = responseJson.token
+        echo "token: ${token}"
         echo "repo: ${repo}, tag: ${tag}, UNAME=${UNAME}, UPASS=${UPASS}"
     }
     return false
