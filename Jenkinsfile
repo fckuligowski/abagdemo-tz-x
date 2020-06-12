@@ -85,5 +85,10 @@ def imageExists(imageName) {
     tag = iparts[1]
     withCredentials([usernamePassword(credentialsId: 'docker-fckuligowski', passwordVariable: 'UNAME', usernameVariable: 'UPASS')]) {
         echo "repo: ${repo}, tag: ${tag}, UNAME=${UNAME}, UPASS=${UPASS}"
+        token = sh(
+            script: "curl -s -H \"Content-Type: application/json\" -X POST -d '{\"username\": \"'${UNAME}'\", \"password\": \"'${UPASS}'\"}' https://hub.docker.com/v2/users/login/ | jq -r .token",
+            returnStdout: true
+        )
+        echo "token: ${token}"
     }
 }
