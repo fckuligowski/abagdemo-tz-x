@@ -75,3 +75,12 @@ def getImageName() {
     }
     return rtn
 }
+
+def imageExists(imageName) {
+    iparts = imageName.split(':')
+    repo = iparts[0]
+    tag = iparts[1]
+    withCredentials([usernamePassword(credentialsId: 'docker-fckuligowski', passwordVariable: 'UNAME', usernameVariable: 'UPASS')]) {
+        echo "repo: ${repo}, tag: ${tag}, UNAME=${UNAME}, UPASS=${UPASS}"
+    }
+}
