@@ -14,7 +14,10 @@ node {
     if (isaMerge(branch)) {
         echo "Do the Docker Push here"
     }
-    def imageName = getImageName()   
+    def imageName = getImageName() 
+    if (!imageExists(imageName)) {
+        echo "Image has not been built"
+    }
     echo "imageName: ${imageName}"
     echo 'AT THE END'
 }
