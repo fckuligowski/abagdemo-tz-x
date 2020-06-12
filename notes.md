@@ -46,5 +46,17 @@ https://8080-dot-12675158-dot-devshell.appspot.com/git/notifyCommit?url=https://
 ```
 Gonna need a Jenkins server that's publicly available, so the Git Webhooks can work. For now, I'll use polling.
 
+**Flux**
+Here is my command for my repo for Flux.
+```
+export GHUSER="fckuligowski"
+fluxctl install \
+--git-user=${GHUSER} \
+--git-email=${GHUSER}@users.noreply.github.com \
+--git-url=git@github.com:${GHUSER}/abagdemo \
+--git-path=k8s \
+--namespace=flux | kubectl apply -f -
+```
+Though Flux incorrectly reports that it failed: https://github.com/weaveworks/eksctl/pull/1067
 
 

@@ -8,19 +8,8 @@ from google.cloud.storage import Blob
 @bags_blueprint.route('/')
 @bags_blueprint.route('/index')
 def index():
-    return 'Welcome to the %s application. Version=%s' % (
+    return 'Welcome to the %s application. Please enjoy responsibly.' % (
         current_app.config.get('APP_NAME'), get_version())
-
-def get_version():
-    rtn = 'unknown'
-    try:
-        with open('version.txt', 'r') as file:
-            instr = file.read().replace('\n', '')
-            instrs = instr.split(':')
-            rtn = instrs[-1]
-    except Exception as e:
-        pass
-    return rtn
 
 @bags_blueprint.route('/scan', methods=['POST'])
 def scan():
