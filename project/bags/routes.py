@@ -22,7 +22,7 @@ def get_version():
         pass
     return rtn
 
-@bags_blueprint.route('/scan', methods=['POST'])
+@bags_blueprint.route('/XXXscan', methods=['POST'])
 def scan():
     rtn = {
         'scan': ''
