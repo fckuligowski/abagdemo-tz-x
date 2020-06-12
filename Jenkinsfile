@@ -17,7 +17,8 @@ node {
     
     // Build the Docker Image so we can test with it
     def imageName = getImageFullName()
-    def imageTag = "${getImageRepo(imageName)}:${env.BUILD_ID}"
+    def imageRepo = getImageRepo(imageName)
+    def imageTag = "${imageRepo}:${env.BUILD_ID}"
     echo "Build Tag: ${imageTag}"
     def customImage = docker.build(imageTag)
     
