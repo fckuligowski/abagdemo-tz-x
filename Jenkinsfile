@@ -1,3 +1,10 @@
+import groovy.json.JsonSlurperClassic 
+
+@NonCPS
+def jsonParse(def json) {
+    new groovy.json.JsonSlurperClassic().parseText(json)
+}
+
 node {  
     checkout scm
     echo 'before'
@@ -97,10 +104,16 @@ def imageExists(imageName) {
             acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON'
         echo "response: ${response.getContent()}"
         responseBody = response.getContent()
+        responseJson = jsonParse(responseBody)
         //responseJson = new groovy.json.JsonSlurper().parseText(responseBody)
         //token = responseJson.token
         //echo "token: ${token}"
         echo "repo: ${repo}, tag: ${tag}, UNAME=${UNAME}, UPASS=${UPASS}"
     }
     return false
+}
+
+@NonCPS
+def jsonParse(jsonStr) {
+
 }
