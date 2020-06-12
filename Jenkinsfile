@@ -83,9 +83,9 @@ def imageExists(imageName) {
     iparts = imageName.split(':')
     repo = iparts[0]
     tag = iparts[1]
-    withCredentials([usernamePassword(credentialsId: 'docker-fckuligowski', passwordVariable: 'UNAME', usernameVariable: 'UPASS')]) {
+    withCredentials([usernamePassword(credentialsId: 'docker-fckuligowski', usernameVariable: 'UNAME', passwordVariable: 'UPASS')]) {
         echo "repo: ${repo}, tag: ${tag}, UNAME=${UNAME}, UPASS=${UPASS}"
-        dataMap = "{'username': ''${UNAME}'', 'password': ''${UPASS}''}"
+        dataMap = "{'username': \"'${UNAME}'\", 'password': ''${UPASS}''}"
         echo "dataMap: ${dataMap}"
         token = sh(
             script: "curl -s -H 'Content-Type: application/json' -X POST -d ${dataMap} https://hub.docker.com/v2/users/login/ | jq -r .token",
