@@ -26,29 +26,33 @@ node {
     def doingPR = isaPullRequest(branch)
     def doingMerge = isaMerge(branch)
 
-    // Unit Tests
-    stage('Unit Tests') {
-        if (doingPR || doingMerge) {
-            echo "Running the Unit Tests"
-            try {
-                sh 'tests/testit.sh unit --junit-xml test-reports/results.xml'
-            } finally {
-                junit allowEmptyResults: true, testResults: 'test-reports/results.xml'
+    // Testing section
+    customImage.inside {
+        withCredentials([file(credentialsId: 'hazel-math', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+            // Unit Tests
+            stage('Unit Tests') {
+                if (doingPR || doingMerge) {
+                    echo "Running the Unit Tests"
+                    try {
+                        sh 'tests/testit.sh unit --junit-xml test-reports/results.xml'
+                    } finally {
+                        junit allowEmptyResults: true, testResults: 'test-reports/results.xml'
+                    }
+                    echo "Ran the Unit Tests"
+                }
             }
-            echo "Ran the Unit Tests"
-        }
-    }
-
-    // Functional Tests
-    stage('Functional Tests') {
-        if (doingPR || doingMerge) {
-            echo "Running the Functional Tests"
-            try {
-                sh 'tests/testit.sh functional --junit-xml test-reports/results.xml'
-            } finally {
-                junit allowEmptyResults: true, testResults: 'test-reports/results.xml'
+            // Functional Tests
+            stage('Functional Tests') {
+                if (doingPR || doingMerge) {
+                    echo "Running the Functional Tests"
+                    try {
+                        sh 'tests/testit.sh functional --junit-xml test-reports/results.xml'
+                    } finally {
+                        junit allowEmptyResults: true, testResults: 'test-reports/results.xml'
+                    }
+                    echo "Ran the Functional Tests"
+                }
             }
-            echo "Ran the Functional Tests"
         }
     }
 
