@@ -96,7 +96,12 @@ def imageExists(imageName) {
             returnStdout: true
         )
         echo "token: ${token}"
-        def response = httpRequest 'http://localhost:8080/jenkins/api/json?pretty=true'
+        // create payload
+        httpCreds = """
+            {"username": "$UNAME",
+             "password": "$UPASS"}
+        """
+        response = httpRequest httpMode: 'POST', requestBody: tokenBody, url: "https://hub.docker.com/v2/users/login"
         echo "response: ${response}"
     }
 }
