@@ -98,23 +98,31 @@ def imageExists(imageName) {
     tag = iparts[1]
     withCredentials([usernamePassword(credentialsId: 'docker-fckuligowski', usernameVariable: 'UNAME', passwordVariable: 'UPASS')]) {
         echo "repo: ${repo}, tag: ${tag}, UNAME=${UNAME}, UPASS=${UPASS}"
+        // Get Docker login token
         // create payload
         httpCreds = """
             {"username": "$UNAME",
              "password": "$UPASS"}
         """
         echo "httpCreds: ${httpCreds}"
-        // Get Docker login token
+        // Call API to get Token
         response = httpRequest httpMode: 'POST', requestBody: httpCreds, 
             url: "https://hub.docker.com/v2/users/login", 
             acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON'
+        // Parse Token from result
         echo "response: ${response.getContent()}"
         responseBody = response.getContent()
         responseJson = jsonParse(responseBody)
-        //responseJson = new groovy.json.JsonSlurper().parseText(responseBody)
         token = responseJson.token
         echo "token: ${token}"
-        echo "repo: ${repo}, tag: ${tag}, UNAME=${UNAME}, UPASS=${UPASS}"
+        // Call API to get list of Images
+        response = httpRequest customHeaders: [[name:'Authorization', value:"JWT ${token}"]],
+            url: "https://hub.docker.com/v2/repositories/${repo}/tags/?page_size=10000", 
+            acceptType: 'APPLICATION_JSON'
+        echo "response: ${response.getContent()}"
+        responseBody = response.getContent()
+        echo "responseBody: ${responseBody}" 
+        responseJson = jsonParse(responseBody)   
     }
     return false
 }
