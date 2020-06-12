@@ -64,7 +64,7 @@ def isaPullRequest(branch) {
 def getImageName() {
     rtn = ''
     images = sh(
-        script: "git diff origin/master -- k8s/abagdemo-deploy.yaml | grep 'image:'",
+        script: "grep 'image:' k8s/abagdemo-deploy.yaml",
         returnStdout: true
     ).split('\n')
     echo "images: ${images}"
