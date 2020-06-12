@@ -68,10 +68,10 @@ def getImageName() {
         returnStdout: true
     ).split('\n')
     echo "images: ${images}"
-    if (images.size > 0) {
-        imageStr = images[images.size-1]
+    if (images.size() > 0) {
+        imageStr = images[images.size()-1]
         imageStrs = image.split(' ')
-        rtn = imageStrs[imageStrs.size-1]
+        rtn = imageStrs[imageStrs.size()-1]
     }
     return rtn
 }
