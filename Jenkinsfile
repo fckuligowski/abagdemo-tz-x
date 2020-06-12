@@ -15,9 +15,13 @@ node {
         echo "Do the Docker Push here"
     }
     def imageName = getImageName()   
+    echo "imageName: ${imageName}"
     echo 'AT THE END'
 }
 
+// Get the current Git branch name by running the Git
+// command to tell us what our current branch is.
+// Returns the name of the branch.
 def getBranchName() {
     fullbr = "${sh(script:'git name-rev --name-only HEAD', returnStdout: true)}"
     echo "branch: ${fullbr}"
@@ -58,9 +62,16 @@ def isaPullRequest(branch) {
 }
 
 def getImageName() {
+    rtn = ''
     images = sh(
-        script: "git diff origin/master -- k8s/abagdemo-deploy.yaml",
+        script: "git diff origin/master -- k8s/abagdemo-deploy.yaml | grep 'image:'",
         returnStdout: true
     ).split('\n')
     echo "images: ${images}"
+    if (images.size() > 0) {
+        imageStr = images[images.size()-1]
+        imageStrs = imageStr.split(' ')
+        rtn = imageStrs[imageStrs.size()-1]
+    }
+    return rtn
 }
