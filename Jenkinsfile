@@ -70,7 +70,7 @@ def getImageName() {
     echo "images: ${images}"
     if (images.size() > 0) {
         imageStr = images[images.size()-1]
-        imageStrs = image.split(' ')
+        imageStrs = imageStr.split(' ')
         rtn = imageStrs[imageStrs.size()-1]
     }
     return rtn
