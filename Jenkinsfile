@@ -132,14 +132,14 @@ def getImageFullName() {
     return rtn
 }
 
-getImageRepo(imageFullName) {
+def getImageRepo(imageFullName) {
     iparts = imageName.split(':')
     repo = iparts[0]
     tag = iparts[1]
     return repo
 }
 
-getImageTag(imageFullName) {
+def getImageTag(imageFullName) {
     iparts = imageName.split(':')
     tag = iparts[1]
     return tag
