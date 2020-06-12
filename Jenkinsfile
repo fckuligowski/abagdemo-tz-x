@@ -87,8 +87,12 @@ def imageExists(imageName) {
         echo "repo: ${repo}, tag: ${tag}, UNAME=${UNAME}, UPASS=${UPASS}"
         dataMap = "{'username': \"'${UNAME}'\", 'password': ''${UPASS}''}"
         echo "dataMap: ${dataMap}"
+        //token = sh(
+        //    script: "curl -s -H 'Content-Type: application/json' -X POST -d ${dataMap} https://hub.docker.com/v2/users/login/ | jq -r .token",
+        //    returnStdout: true
+        //)
         token = sh(
-            script: "curl -s -H 'Content-Type: application/json' -X POST -d ${dataMap} https://hub.docker.com/v2/users/login/ | jq -r .token",
+            script: "curl -s -H \\"Content-Type: application/json\\" -X POST -d '{\\"username\\": \\"'${UNAME}'\\", \\"password\\": \\"'${UPASS}'\\"}' https://hub.docker.com/v2/users/login/ | jq -r .token
             returnStdout: true
         )
         echo "token: ${token}"
