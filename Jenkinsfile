@@ -1,3 +1,6 @@
+// Define the method to parse JSON results
+// This library must be approved in Jenkins
+// Manage Jenkins -> In-process Script Approval
 import groovy.json.JsonSlurperClassic 
 
 @NonCPS
@@ -5,33 +8,42 @@ def jsonParse(def json) {
     new groovy.json.JsonSlurperClassic().parseText(json)
 }
 
-//@NonCPS
-//def jsonParse(String jsonText) {
-//  final slurper = new groovy.json.JsonSlurper()
-//  return new HashMap<>(slurper.parseText(jsonText))
-//}
-
+// Begin main Pipeline process
 node {  
     checkout scm
-    echo 'before'
+
+    // Determine the current GitHub branch that we are on
     def branch = getBranchName()
-    echo 'after'
     
     stage('Check Version') {
         echo "branch: ${branch}"
     }
 
-    if (isaPullRequest(branch) || isaMerge(branch)) {
-        echo "Run the Tests here"
+    // Unit Tests
+    stage('Unit Tests') {
+        if (isaPullRequest(branch) || isaMerge(branch)) {
+            echo "Run the Unit Tests here"
+        }
     }
-    if (isaMerge(branch)) {
-        echo "Do the Docker Push here"
+
+    // Functional Tests
+    stage('Functional Tests') {
+        if (isaPullRequest(branch) || isaMerge(branch)) {
+            echo "Run the Functional Tests here"
+        }
     }
-    def imageName = getImageName() 
-    if (!imageExists(imageName)) {
-        echo "Image has not been built"
+
+    // Push Container to Repo if this is a GitHub Merge
+    // and if the Image Tag doesn't already exist in Docker
+    stage('Push Container Image to Repo') {
+        if (isaMerge(branch)) {
+            def imageName = getImageName()
+            echo "imageName: ${imageName}"
+            if (!imageExists(imageName)) {
+                echo "Do the Docker Push here"
+            }
+        }
     }
-    echo "imageName: ${imageName}"
     echo 'AT THE END'
 }
 
@@ -92,6 +104,8 @@ def getImageName() {
     return rtn
 }
 
+// Call the Docker API to see if the specified container Image 
+// already exists.
 def imageExists(imageName) {
     rtn = false
     iparts = imageName.split(':')
@@ -106,7 +120,7 @@ def imageExists(imageName) {
              "password": "$UPASS"}
         """
         echo "httpCreds: ${httpCreds}"
-        // Call API to get Token
+        // Call API to get login Token for next API call
         response = httpRequest httpMode: 'POST', requestBody: httpCreds, 
             url: "https://hub.docker.com/v2/users/login", 
             acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON'
@@ -115,10 +129,11 @@ def imageExists(imageName) {
         responseMap = jsonParse(responseBody)
         token = responseMap.token
         echo "token: ${token}"
-        // Call API to get list of Images
+        // Call API to get list of Images in Repo
         response = httpRequest customHeaders: [[name:'Authorization', value:"JWT ${token}"]],
             url: "https://hub.docker.com/v2/repositories/${repo}/tags/?page_size=10000", 
             acceptType: 'APPLICATION_JSON'
+        // Parse results and determine if our Tag is already in Repo results
         responseBody = response.getContent()
         responseMap = jsonParse(responseBody)  
         for (img in responseMap.results) {
