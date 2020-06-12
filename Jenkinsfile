@@ -38,7 +38,6 @@ node {
     stage('Push Container Image to Repo') {
         if (isaMerge(branch)) {
             def imageName = getImageName()
-            echo "imageName: ${imageName}"
             if (!imageExists(imageName)) {
                 echo "Do the Docker Push here"
             }
@@ -52,7 +51,6 @@ node {
 // Returns the name of the branch.
 def getBranchName() {
     fullbr = "${sh(script:'git name-rev --name-only HEAD', returnStdout: true)}"
-    echo "branch: ${fullbr}"
     branch = fullbr.substring(fullbr.lastIndexOf('/') + 1, fullbr.length()).trim()
     echo "branch: ${branch}"
     return branch
@@ -67,21 +65,25 @@ def isaMerge(branch) {
 }
 
 def isaPullRequest(branch) {
+    // Get a list of open PRs for the GitHub repo
     openPulls = sh(
         script: "curl 'https://api.github.com/repos/fckuligowski/abagdemo/pulls?state=open' -o pulls.json",
         returnStdout: true
     )
-    // echo "openPulls: ${openPulls}"
+    // Find if any of those PRs are for the Branch we're on
     branchPulls = sh(
         script: "jq '.[] .head.ref' pulls.json",
         returnStdout: true
     )
     echo "branchPulls: ${branchPulls}"
+    // If there is an open PR for this Branch then we
+    // consider that yes, there is an open PR
     rtn = false
     if (branchPulls.indexOf(branch) >= 0) {
         echo 'This is a Pull Request'
         rtn = true
     }  
+    // Remove the temp file
     cleanup = sh(
         script: "rm pulls.json",
         returnStdout: true
@@ -101,6 +103,7 @@ def getImageName() {
         imageStrs = imageStr.split(' ')
         rtn = imageStrs[imageStrs.size()-1]
     }
+    echo "getImageName: ${rtn}"
     return rtn
 }
 
