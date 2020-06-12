@@ -97,9 +97,9 @@ def imageExists(imageName) {
             acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON'
         echo "response: ${response.getContent()}"
         responseBody = response.getContent()
-        responseJson = new groovy.json.JsonSlurper().parseText(responseBody)
-        token = responseJson.token
-        echo "token: ${token}"
+        //responseJson = new groovy.json.JsonSlurper().parseText(responseBody)
+        //token = responseJson.token
+        //echo "token: ${token}"
         echo "repo: ${repo}, tag: ${tag}, UNAME=${UNAME}, UPASS=${UPASS}"
     }
     return false
