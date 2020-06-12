@@ -92,7 +92,7 @@ def imageExists(imageName) {
         //    returnStdout: true
         //)
         token = sh(
-            script: "curl -s -H \\"Content-Type: application/json\\" -X POST -d '{\\"username\\": \\"'${UNAME}'\\", \\"password\\": \\"'${UPASS}'\\"}' https://hub.docker.com/v2/users/login/ | jq -r .token
+            script: "curl -s -H \\\"Content-Type: application/json\\\" -X POST -d '{\\\"username\\\": \\\"'${UNAME}'\\\", \\\"password\\\": \\\"'${UPASS}'\\\"}' https://hub.docker.com/v2/users/login/ | jq -r .token"
             returnStdout: true
         )
         echo "token: ${token}"
