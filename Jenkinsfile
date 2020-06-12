@@ -16,6 +16,9 @@ node {
     def branch = getBranchName()
     
     // Build the Docker Image so we can test with it
+    def imageName = getImageFullName()
+    def imageTag = "${getImageRepo(imageName)}:${env.BUILD_ID}"
+    echo "Build Tag: ${imageTag}"
     def customImage = docker.build(imageTag)
     
     // Determine if we are doing a PR and/or Merge
@@ -52,11 +55,12 @@ node {
     // and if the Image Tag doesn't already exist in Docker
     stage('Push Container Image to Repo') {
         if (doingMerge) {
-            def imageName = getImageName()
             if (!imageExists(imageName)) {
                 echo "Push Container to Docker Repo"
+                imageTag = getImageTag(imageName)
+                echo "Push Tag: ${imageTag}"
                 docker.withRegistry('', 'docker-fckuligowski') {
-                    customImage.push()
+                    customImage.push(imageTag)
                 }
             } else {
                 echo "Image ${imageName} already exists in repo"
@@ -111,7 +115,7 @@ def isaPullRequest(branch) {
     return rtn
 }
 
-def getImageName() {
+def getImageFullName() {
     rtn = ''
     images = sh(
         script: "grep 'image:' k8s/abagdemo-deploy.yaml",
@@ -127,13 +131,26 @@ def getImageName() {
     return rtn
 }
 
+getImageRepo(imageFullName) {
+    iparts = imageName.split(':')
+    repo = iparts[0]
+    tag = iparts[1]
+    return repo
+}
+
+getImageTag(imageFullName) {
+    iparts = imageName.split(':')
+    tag = iparts[1]
+    return tag
+}
+
 // Call the Docker API to see if the specified container Image 
 // already exists.
 def imageExists(imageName) {
     rtn = false
     iparts = imageName.split(':')
-    repo = iparts[0]
-    tag = iparts[1]
+    repo = getImageRepo(imageName)
+    tag = getImageTag(imageName)
     withCredentials([usernamePassword(credentialsId: 'docker-fckuligowski', usernameVariable: 'UNAME', passwordVariable: 'UPASS')]) {
         echo "repo: ${repo}, tag: ${tag}, UNAME=${UNAME}, UPASS=${UPASS}"
         // Get Docker login token
