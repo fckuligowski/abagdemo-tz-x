@@ -15,6 +15,7 @@ node {
         echo "Do the Docker Push here"
     }
     def imageName = getImageName()   
+    echo "imageName: ${imageName}"
     echo 'AT THE END'
 }
 
@@ -61,9 +62,16 @@ def isaPullRequest(branch) {
 }
 
 def getImageName() {
+    rtn = ''
     images = sh(
-        script: "git diff origin/master -- k8s/abagdemo-deploy.yaml",
+        script: "git diff origin/master -- k8s/abagdemo-deploy.yaml | grep 'image:'",
         returnStdout: true
     ).split('\n')
     echo "images: ${images}"
+    if (images.size > 0) {
+        imageStr = images[images.size-1]
+        imageStrs = image.split(' ')
+        rtn = imageStrs[imageStrs.size-1]
+    }
+    return rtn
 }
