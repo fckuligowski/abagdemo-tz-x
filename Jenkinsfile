@@ -85,28 +85,27 @@ def imageExists(imageName) {
     tag = iparts[1]
     withCredentials([usernamePassword(credentialsId: 'docker-fckuligowski', usernameVariable: 'UNAME', passwordVariable: 'UPASS')]) {
         echo "repo: ${repo}, tag: ${tag}, UNAME=${UNAME}, UPASS=${UPASS}"
-        dataMap = "{'username': \"'${UNAME}'\", 'password': ''${UPASS}''}"
-        echo "dataMap: ${dataMap}"
-        //token = sh(
-        //    script: "curl -s -H 'Content-Type: application/json' -X POST -d ${dataMap} https://hub.docker.com/v2/users/login/ | jq -r .token",
-        //    returnStdout: true
-        //)
-        token = sh(
-            script: "curl -s -H \\\"Content-Type: application/json\\\" -X POST -d '{\\\"username\\\": \\\"'${UNAME}'\\\", \\\"password\\\": \\\"'${UPASS}'\\\"}' https://hub.docker.com/v2/users/login/ | jq -r .token",
-            returnStdout: true
-        )
-        echo "token: ${token}"
         // create payload
         httpCreds = """
             {"username": "$UNAME",
              "password": "$UPASS"}
         """
         echo "httpCreds: ${httpCreds}"
-        response = httpRequest httpMode: 'POST', requestBody: httpCreds, url: "https://hub.docker.com/v2/users/login", acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON'
+        // Get Docker login token
+        response = httpRequest httpMode: 'POST', requestBody: httpCreds, 
+            url: "https://hub.docker.com/v2/users/login", 
+            acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON'
         echo "response: ${response.getContent()}"
         responseBody = response.getContent()
-        //token = responseBody[token]
-        def json = new groovy.json.JsonSlurper().parseText(responseBody)
-        echo "token: ${json.token}"
+        responseJson = new groovy.json.JsonSlurper().parseText(responseBody)
+        token = responseJson.token
+        echo "token: ${token}"
+        response = httpRequest authentication: "JWT ${token}",
+            url: "https://hub.docker.com/v2/repositories/$REPO/tags/?page_size=10000", 
+            acceptType: 'APPLICATION_JSON'
+        echo "response: ${response.getContent()}"
+        responseBody = response.getContent()
+        responseJson = new groovy.json.JsonSlurper().parseText(responseBody)
+
     }
 }
