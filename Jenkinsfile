@@ -5,7 +5,7 @@
 //    new groovy.json.JsonSlurperClassic().parseText(json)
 //}
 
-@NonCPS
+//@NonCPS
 def jsonParse(String jsonText) {
   final slurper = new groovy.json.JsonSlurper()
   return new HashMap<>(slurper.parseText(jsonText))
