@@ -93,6 +93,7 @@ def getImageName() {
 }
 
 def imageExists(imageName) {
+    rtn = false
     iparts = imageName.split(':')
     repo = iparts[0]
     tag = iparts[1]
@@ -110,7 +111,6 @@ def imageExists(imageName) {
             url: "https://hub.docker.com/v2/users/login", 
             acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON'
         // Parse Token from result
-        echo "response: ${response.getContent()}"
         responseBody = response.getContent()
         responseMap = jsonParse(responseBody)
         token = responseMap.token
@@ -119,13 +119,14 @@ def imageExists(imageName) {
         response = httpRequest customHeaders: [[name:'Authorization', value:"JWT ${token}"]],
             url: "https://hub.docker.com/v2/repositories/${repo}/tags/?page_size=10000", 
             acceptType: 'APPLICATION_JSON'
-        echo "response: ${response.getContent()}"
         responseBody = response.getContent()
-        echo "responseBody: ${responseBody}" 
-        responseMap = jsonParse(responseBody)   
-        for (int j = 0; j < responseMap.results.size(); j++) {
-            echo responseMap.results[j].name
+        responseMap = jsonParse(responseBody)  
+        imageFind = responseMap.results.find { it.value.name == tag }
+        echo "imageFind: ${imageFind}"
+        if (imageFind) {
+            rtn = true
+            echo "Image was Found"
         }
     }
-    return false
+    return rtn
 }
