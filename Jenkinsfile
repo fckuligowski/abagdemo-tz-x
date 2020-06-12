@@ -19,16 +19,18 @@ node {
         echo "branch: ${branch}"
     }
 
+    def doingPR = isaPullRequest(branch)
+    def doingMerge = isaMerge(branch)
     // Unit Tests
     stage('Unit Tests') {
-        if (isaPullRequest(branch) || isaMerge(branch)) {
+        if (doingPR || doingMerge) {
             echo "Run the Unit Tests here"
         }
     }
 
     // Functional Tests
     stage('Functional Tests') {
-        if (isaPullRequest(branch) || isaMerge(branch)) {
+        if (doingPR || doingMerge) {
             echo "Run the Functional Tests here"
         }
     }
@@ -36,7 +38,7 @@ node {
     // Push Container to Repo if this is a GitHub Merge
     // and if the Image Tag doesn't already exist in Docker
     stage('Push Container Image to Repo') {
-        if (isaMerge(branch)) {
+        if (doingMerge) {
             def imageName = getImageName()
             if (!imageExists(imageName)) {
                 echo "Do the Docker Push here"
