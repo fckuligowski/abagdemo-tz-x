@@ -103,6 +103,6 @@ def imageExists(imageName) {
         """
         echo "httpCreds: ${httpCreds}"
         response = httpRequest httpMode: 'POST', requestBody: httpCreds, url: "https://hub.docker.com/v2/users/login", acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON'
-        echo "response: ${response}"
+        echo "response: ${response.getContent()}"
     }
 }
