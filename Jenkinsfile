@@ -112,8 +112,3 @@ def imageExists(imageName) {
     }
     return false
 }
-
-@NonCPS
-def jsonParse(jsonStr) {
-
-}
