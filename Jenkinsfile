@@ -100,7 +100,7 @@ def imageExists(imageName) {
         responseJson = new groovy.json.JsonSlurper().parseText(responseBody)
         token = responseJson.token
         echo "token: ${token}"
-        response = httpRequest authentication: "JWT ${token}",
+        response = httpRequest customHeaders:[[name:'Authorization', value:"JWT ${token}"]],
             url: "https://hub.docker.com/v2/repositories/$REPO/tags/?page_size=10000", 
             acceptType: 'APPLICATION_JSON'
         echo "response: ${response.getContent()}"
