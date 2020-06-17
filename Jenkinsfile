@@ -15,6 +15,10 @@ node {
     // Determine the current GitHub branch that we are on
     def branch = getBranchName()
     
+    // Determine if we are doing a PR and/or Merge
+    def doingPR = isaPullRequest(branch)
+    def doingMerge = isaMerge(branch)
+
     // Build the Docker Image so we can test with it
     def imageName = getImageFullName()
     def imageRepo = getImageRepo(imageName)
@@ -22,10 +26,6 @@ node {
     echo "Build Tag: ${imageTag}"
     def customImage = docker.build(imageTag)
     
-    // Determine if we are doing a PR and/or Merge
-    def doingPR = isaPullRequest(branch)
-    def doingMerge = isaMerge(branch)
-
     // Testing section
     customImage.inside {
         withCredentials([file(credentialsId: 'hazel-math', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
@@ -57,7 +57,7 @@ node {
     }
 
     // Push Container to Repo if this is a GitHub Merge
-    // and if the Image Tag doesn't already exist in Docker
+    // and if the Image Tag doesn't already exist in Docker.
     def newImage = false
     stage('Push Container Image to Repo') {
         if (doingMerge) {
