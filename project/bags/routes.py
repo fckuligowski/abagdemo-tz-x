@@ -17,7 +17,6 @@ def scan():
         'scan': ''
     }
     if request.method == 'POST':
-        # scan = json.loads(request.get_json())
         scan = request.get_json()
         rtn['scan'] = save_bag_scan(scan)
     return rtn
