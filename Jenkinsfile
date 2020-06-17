@@ -69,6 +69,7 @@ node {
                 }
                 // Add a Tag to the Git repo to mark our new version
                 sh "git tag -a ${imageTag} -m 'abagdemo version ${imageTag}'"
+                sh "git push origin --tags"
             } else {
                 echo "Image ${imageName} already exists in repo"
             }
