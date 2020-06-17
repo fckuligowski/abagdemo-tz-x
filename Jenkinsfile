@@ -57,7 +57,7 @@ node {
     }
 
     // Push Container to Repo if this is a GitHub Merge
-    // and if the Image Tag doesn't already exist in Docker
+    // and if the Image Tag doesn't already exist in Docker.
     def newImage = false
     stage('Push Container Image to Repo') {
         if (doingMerge) {
