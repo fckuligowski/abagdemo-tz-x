@@ -9,7 +9,7 @@ I had trouble with "pip3 install -r requirements.txt" with the google-cloud-stor
 Create the image for abagdemo
 
 ```
-docker build -t fckuligowski/abagdemo:v1.x
+docker build -t fckuligowski/abagdemo:v1.x .
 ```
 
 If you want to run the container from Docker, and shell into it.
