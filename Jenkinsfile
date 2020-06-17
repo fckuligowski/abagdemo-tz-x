@@ -20,15 +20,11 @@ node {
     def doingMerge = isaMerge(branch)
 
     // Build the Docker Image so we can test with it
-    stage('Build Container Image') {
-        if (doingPR || doingMerge) {
-            def imageName = getImageFullName()
-            def imageRepo = getImageRepo(imageName)
-            def imageTag = "${imageRepo}:${env.BUILD_ID}"
-            echo "Build Tag: ${imageTag}"
-            def customImage = docker.build(imageTag)
-        }
-    }
+    def imageName = getImageFullName()
+    def imageRepo = getImageRepo(imageName)
+    def imageTag = "${imageRepo}:${env.BUILD_ID}"
+    echo "Build Tag: ${imageTag}"
+    def customImage = docker.build(imageTag)
     
     // Testing section
     customImage.inside {
