@@ -67,6 +67,8 @@ node {
                 docker.withRegistry('', 'docker-fckuligowski') {
                     customImage.push(imageTag)
                 }
+                // Add a Tag to the Git repo to mark our new version
+                sh "git tag -a ${imageTag} -m 'abagdemo version ${imageTag}'"
             } else {
                 echo "Image ${imageName} already exists in repo"
             }
@@ -132,7 +134,7 @@ def getImageFullName() {
         imageStrs = imageStr.split(' ')
         rtn = imageStrs[imageStrs.size()-1]
     }
-    echo "getImageName: ${rtn}"
+    echo "getImageFullName: ${rtn}"
     return rtn
 }
 

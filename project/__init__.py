@@ -4,6 +4,7 @@
 #
 from flask import Flask
 import json
+import sys
 from google.cloud import storage
 from google.cloud.storage import Blob
 
@@ -24,23 +25,15 @@ def initialize_extensions(app):
        Create the storage bucket and file that we will
        use for our testing data.
     """
-    # Get the storage bucket
-    storage_client = storage.Client()
-    bucket_name = app.config.get('DATA_BUCKET_NAME')
+    # Test the Google Cloud Storage credentials
     try:
-        bucket = storage_client.get_bucket(bucket_name)
+        storage_client = storage.Client()
+        for bucket in storage_client.list_buckets(max_results=1):
+            tmp = bucket
     except Exception as e:
-        bucket = storage_client.create_bucket(bucket_name)
-    # Test if the data file is found in the bucket, and
-    # create it if it doesn't exist.
-    blob = Blob(app.config.get('DATA_FILE_NAME'), bucket)
-    if not blob.exists():
-        # Open the initial data file
-        init_fname = app.config.get('INIT_DATA_FILE')
-        with open(init_fname) as infile:
-            init_data = json.load(infile)
-        # Copy it to the storage bucket
-        blob.upload_from_string(json.dumps(init_data, indent=4))
+        msg = "Unable to access Google Storage data due to error: %s." % str(e)
+        print(msg)
+        sys.exit(1)
 
 def register_blueprints(app):
     from project.bags import bags_blueprint
