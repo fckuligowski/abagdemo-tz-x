@@ -58,6 +58,7 @@ node {
 
     // Push Container to Repo if this is a GitHub Merge
     // and if the Image Tag doesn't already exist in Docker
+    def newImage = false
     stage('Push Container Image to Repo') {
         if (doingMerge) {
             if (!imageExists(imageName)) {
@@ -67,12 +68,18 @@ node {
                 docker.withRegistry('', 'docker-fckuligowski') {
                     customImage.push(imageTag)
                 }
-                // Add a Tag to the Git repo to mark our new version
-                sh "git tag -a ${imageTag} -m 'abagdemo version ${imageTag}'"
-                sh "git push origin --tags"
+                newImage = true
             } else {
                 echo "Image ${imageName} already exists in repo"
             }
+        }
+    }
+    
+    // Add a version tag to the GitHub repo
+    stage('Tag GitHub repo') {
+        if (newImage) {
+            imageTag = getImageTag(imageName)
+            addGitHubTag(imageTag)
         }
     }
     echo 'AT THE END'
@@ -192,4 +199,14 @@ def imageExists(imageName) {
     }
     echo "imageExists - repo: ${repo}, tag: ${tag}, return: ${rtn}"
     return rtn
+}
+
+def addGitHubTag(imageTag) {
+    withCredentials([usernamePassword(credentialsId: 'fckuligowski-git', 
+        passwordVariable: 'GIT_PASSWORD', 
+        usernameVariable: 'GIT_USERNAME')]) {
+            // Add a Tag to the Git repo to mark our new version
+            sh "git tag -a ${imageTag} -m 'abagdemo version ${imageTag}'"
+            sh "git push 'https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/fckuligowski/abagdemo' --tags"
+    }
 }
