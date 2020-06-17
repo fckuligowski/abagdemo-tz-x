@@ -15,17 +15,21 @@ node {
     // Determine the current GitHub branch that we are on
     def branch = getBranchName()
     
-    // Build the Docker Image so we can test with it
-    def imageName = getImageFullName()
-    def imageRepo = getImageRepo(imageName)
-    def imageTag = "${imageRepo}:${env.BUILD_ID}"
-    echo "Build Tag: ${imageTag}"
-    def customImage = docker.build(imageTag)
-    
     // Determine if we are doing a PR and/or Merge
     def doingPR = isaPullRequest(branch)
     def doingMerge = isaMerge(branch)
 
+    // Build the Docker Image so we can test with it
+    stage('Build Container Image') {
+        if (doingPR || doingMerge) {
+            def imageName = getImageFullName()
+            def imageRepo = getImageRepo(imageName)
+            def imageTag = "${imageRepo}:${env.BUILD_ID}"
+            echo "Build Tag: ${imageTag}"
+            def customImage = docker.build(imageTag)
+        }
+    }
+    
     // Testing section
     customImage.inside {
         withCredentials([file(credentialsId: 'hazel-math', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
