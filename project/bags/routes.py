@@ -67,6 +67,8 @@ def get_bag_data(bag_id):
 def save_bag_scan(scan):
     """
         Add the supplied scan to the end of the data file.
+        Returns back an integer with the number scan that this
+        supplied scan is in the file (array index).
     """
     data_dict, blob = get_data()
     # Add record to end of data
