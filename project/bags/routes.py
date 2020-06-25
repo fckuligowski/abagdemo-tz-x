@@ -14,8 +14,8 @@ def index():
 def get_version():
     """
         Read the version number from the version.txt file, which the
-        code pipeline has placed in the cwd. Or show 'unknown' if
-        we can't find the file.
+        code pipeline has placed in the cwd and return it as the version.
+        Or return 'unknown' if we can't find the file.
     """
     rtn = 'unknown'
     try:
