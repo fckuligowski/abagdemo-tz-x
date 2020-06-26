@@ -53,7 +53,7 @@ export GHUSER="fckuligowski"
 fluxctl install \
 --git-user=${GHUSER} \
 --git-email=${GHUSER}@users.noreply.github.com \
---git-url=git@github.com:${GHUSER}/abagdemo \
+--git-url=git@github.com:${GHUSER}/abagdemo.git \
 --git-path=k8s \
 --namespace=flux | kubectl apply -f -
 ```
