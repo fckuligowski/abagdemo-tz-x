@@ -1,5 +1,7 @@
 tests*
 build*
 k8s*
-!k8s/abagdemo-deploy.yaml
+helm*
+releases*
+!releases/abagdemo.yaml
 *.md

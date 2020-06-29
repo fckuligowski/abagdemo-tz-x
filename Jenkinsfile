@@ -130,18 +130,33 @@ def isaPullRequest(branch) {
     return rtn
 }
 
+// Extract the full container image name from the releases file.
+// It comes from two fields - image.repository and image.tag.
 def getImageFullName() {
-    rtn = ''
-    images = sh(
-        script: "grep 'image:' k8s/abagdemo-deploy.yaml",
+    repo = ''
+    releaseFile = 'releases/abagdemo.yaml'
+    repos = sh(
+        script: "grep 'repository:' ${releaseFile}",
         returnStdout: true
     ).split('\n')
-    echo "images: ${images}"
-    if (images.size() > 0) {
-        imageStr = images[images.size()-1]
-        imageStrs = imageStr.split(' ')
-        rtn = imageStrs[imageStrs.size()-1]
+    echo "repository: ${repos}"
+    if (repos.size() > 0) {
+        repoStr = repos[repos.size()-1]
+        repoStrs = repoStr.split(' ')
+        repo = repoStrs[repoStrs.size()-1]
     }
+    tag = ''
+    tags = sh(
+        script: "grep 'tag:' ${releaseFile}",
+        returnStdout: true
+    ).split('\n')
+    echo "tag: ${tags}"
+    if (tags.size() > 0) {
+        tagStr = tags[tags.size()-1]
+        tagStrs = tagStr.split(' ')
+        tag = tagStrs[tagStrs.size()-1]
+    }
+    rtn = "${repo}:${tag}"
     echo "getImageFullName: ${rtn}"
     return rtn
 }
