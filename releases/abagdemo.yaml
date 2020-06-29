@@ -16,7 +16,7 @@
       values:
         image:
           repository: fckuligowski/abagdemo
-          tag: v1.3.2
+          tag: v1.3.3
         persistence:
           enabled: false
         resources:
