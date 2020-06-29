@@ -17,15 +17,3 @@
         image:
           repository: fckuligowski/abagdemo
           tag: v1.3.3
-        persistence:
-          enabled: false
-        resources:
-          requests:
-            memory: 32Mi
-            cpu: 10m
-        service:
-          type: ClusterIP
-        mariadb:
-          master:
-            persistence:
-              enabled: false
