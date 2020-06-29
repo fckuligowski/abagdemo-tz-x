@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: abagdemo
-        image: fckuligowski/abagdemo:v1.3.1
+        image: fckuligowski/abagdemo:v1.3.2
         ports:
         - containerPort: 5000
         env:
