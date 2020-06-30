@@ -1,7 +1,8 @@
 tests*
 build*
+venv*
+__pycache*
 k8s*
-helm*
-releases*
-!releases/abagdemo.yaml
+!k8s/abagdemo-deploy.yaml
 *.md
+.git*
