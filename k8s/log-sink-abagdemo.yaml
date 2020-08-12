@@ -1,0 +1,10 @@
+apiVersion: pksapi.io/v1beta1
+kind: LogSink
+metadata:
+   name: log-sink
+   namespace: abagdemo
+spec:
+   type: syslog
+   host: ec2-54-237-217-114.compute-1.amazonaws.com
+   port: 514
+   enable_tls: true

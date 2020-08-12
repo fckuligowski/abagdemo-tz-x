@@ -1,0 +1,9 @@
+apiVersion: pksapi.io/v1beta1
+kind: ClusterLogSink
+metadata:
+   name: cluster-log-sink
+spec:
+   type: syslog
+   host: ec2-54-237-217-114.compute-1.amazonaws.com
+   port: 514
+   enable_tls: true

@@ -1,0 +1,18 @@
+# The annotation is for Tanzu K8s Grid (on AWS), 
+# so it will deploy a LB into AWS for us.
+apiVersion: v1
+kind: Service
+metadata:
+  name: abagdemo-svc
+  namespace: abagdemo
+  labels:
+    app: abagdemo
+  annotations:
+        service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 5000
+    protocol: TCP
+  selector:
+    app: abagdemo
