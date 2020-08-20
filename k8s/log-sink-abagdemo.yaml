@@ -5,6 +5,16 @@ metadata:
    namespace: abagdemo
 spec:
    type: syslog
-   host: ec2-54-237-217-114.compute-1.amazonaws.com
+   host: ec2-34-247-39-118.eu-west-1.compute.amazonaws.com
+   port: 514
+   enable_tls: true
+---
+apiVersion: pksapi.io/v1beta1
+kind: ClusterLogSink
+metadata:
+   name: cluster-log-sink
+spec:
+   type: syslog
+   host: ec2-34-247-39-118.eu-west-1.compute.amazonaws.com
    port: 514
    enable_tls: true

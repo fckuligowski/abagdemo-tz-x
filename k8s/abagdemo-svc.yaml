@@ -8,7 +8,13 @@ metadata:
   labels:
     app: abagdemo
   annotations:
-        service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
+    # The TKGI documentation says to add this annotation
+    # to create an AWS Load Balancer. But it creates an
+    # "internal" LB, which can't be accessed from the internet.
+    # Leaving this annotation out causes AWS to create an
+    # external LB, which is what we want. So, this note is just to say
+    # that the TKGI documenation is misleading.
+    # service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
 spec:
   type: LoadBalancer
   ports:

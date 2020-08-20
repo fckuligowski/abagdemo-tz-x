@@ -14,8 +14,6 @@ spec:
     metadata:
       labels:
         app: abagdemo
-      annotations:
-        fluentbit.io/parser: tail
     spec:
       containers:
       - name: abagdemo
