@@ -6,7 +6,7 @@ metadata:
 spec:
    type: syslog
    host: ec2-34-247-39-118.eu-west-1.compute.amazonaws.com
-   port: 514
+   port: 5014
    enable_tls: true
 ---
 apiVersion: pksapi.io/v1beta1
@@ -16,5 +16,5 @@ metadata:
 spec:
    type: syslog
    host: ec2-34-247-39-118.eu-west-1.compute.amazonaws.com
-   port: 514
+   port: 5014
    enable_tls: true
