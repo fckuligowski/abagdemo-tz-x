@@ -5,7 +5,7 @@ metadata:
    namespace: abagdemo
 spec:
    type: syslog
-   host: ec2-34-247-39-118.eu-west-1.compute.amazonaws.com
+   host: syslog.tkg-eu.kuligof.com
    port: 5014
    enable_tls: true
 ---
@@ -15,6 +15,6 @@ metadata:
    name: cluster-log-sink
 spec:
    type: syslog
-   host: ec2-34-247-39-118.eu-west-1.compute.amazonaws.com
+   host: syslog.tkg-eu.kuligof.com
    port: 5014
    enable_tls: true
