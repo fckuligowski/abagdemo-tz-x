@@ -17,7 +17,8 @@ spec:
     spec:
       containers:
       - name: abagdemo
-        image: fckuligowski/abagdemo:v1.3.4
+        # Alternate image (runs as root) fckuligowski/abagdemo:v1.3.4
+        image: fckuligowski/abagdemo-tz:v1.1.1
         ports:
         - containerPort: 5000
         env:
@@ -31,3 +32,5 @@ spec:
         - name: gcp-creds
           secret:
             secretName: abagdemo-gcp-creds
+      securityContext:
+        runAsUser: 1001
