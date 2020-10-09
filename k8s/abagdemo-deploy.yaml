@@ -15,8 +15,9 @@ spec:
       labels:
         app: abagdemo
     spec:
-      imagePullSecrets:
-      - name: harborcreds
+      # imagePullSecrets only needed for Harbor
+      #imagePullSecrets:
+      #- name: harborcreds
       containers:
       - name: nginx
         image: "fckuligowski/nginxsidecar:v1.4"
@@ -34,7 +35,8 @@ spec:
       - name: abagdemo
         # Alternate image (runs as root) fckuligowski/abagdemo:v1.3.4
         # Or this one is the regular image fckuligowski/abagdemo-tz:v1.1.1
-        image: harbor.tkgi.aws.xcelenergy.com/xcel-confluent/abagdemo:vx.x
+        # or this one for Xcel Harbor: harbor.tkgi.aws.xcelenergy.com/xcel-confluent/abagdemo:vx.x
+        image: fckuligowski/abagdemo-tz:v1.1.1
         ports:
         - containerPort: 5000
         env:

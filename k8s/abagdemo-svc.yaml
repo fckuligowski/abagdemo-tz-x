@@ -14,7 +14,7 @@ metadata:
     # Leaving this annotation out causes AWS to create an
     # external LB, which is what we want. So, this note is just to say
     # that the TKGI documenation is misleading.
-    service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
+    #service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
     service.beta.kubernetes.io/aws-load-balancer-connection-draining-enabled: "true"
     service.beta.kubernetes.io/aws-load-balancer-connection-draining-timeout: "60"
     service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"

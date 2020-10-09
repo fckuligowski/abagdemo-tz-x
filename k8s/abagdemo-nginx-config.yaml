@@ -1,8 +1,22 @@
+# The first server{} section redirects all http traffic (port 8080) to https
+# The second server{} section contains the setup for https SSL and its certs
+# This tells nginx to listen on port 8080 (http) and 8443 (https) because 
+# ports 80 and 443 are restricted/privileged ports and nginx won't boot up
+# in a pod container with those port numbers. 
+# In the service definition, we tell it to listen on port 80 and 443, and to
+# send those to targetPort 8080 and 8443.
+# With that, nginx can run as a non-privileged container, yet listen on the
+# normal ports for http/s traffic.
 apiVersion: v1
 data:
   default.conf: |-
     server {
-        listen       8080;
+        listen 8080 default_server;
+        server_name _;
+        return 301 https://$host$request_uri;
+    }
+
+    server {
         listen       8443 ssl;
         ssl_certificate      /etc/nginx/ssl/nginx.crt;
         ssl_certificate_key  /etc/nginx/ssl/nginx.key;
