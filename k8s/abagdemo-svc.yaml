@@ -14,20 +14,22 @@ metadata:
     # Leaving this annotation out causes AWS to create an
     # external LB, which is what we want. So, this note is just to say
     # that the TKGI documenation is misleading.
-    #service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
+    service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
     service.beta.kubernetes.io/aws-load-balancer-connection-draining-enabled: "true"
     service.beta.kubernetes.io/aws-load-balancer-connection-draining-timeout: "60"
     service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
 spec:
   type: LoadBalancer
   ports:
-  - name: "http"
-    port: 80
-    targetPort: "nginx-http"
-    protocol: "TCP"  
   - name: "https"
     port: 443
     targetPort: "nginx-https"
     protocol: "TCP"
+  # Xcel's Prisma security scans will raise an alert if 
+  # our LB is listening on port 80. So, comment out.
+  #- name: "http"
+  #  port: 80
+  #  targetPort: "nginx-http"
+   # protocol: "TCP"  
   selector:
     app: abagdemo
